@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.2.313">
 
   <meta name="author" content="Vítor Pereira   Orientador: Fábio Bayer">
-  <title>An approach to NDVI analysis: 2-D Kumaraswamy autoregressive moving average</title>
+  <title>An approach to NDVI analysis: the 2-D Kumaraswamy autoregressive moving average model</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -28,11 +28,32 @@
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
   </style>
   <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto.css" id="theme">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
@@ -324,7 +345,7 @@
     <div class="slides">
 
 <section id="title-slide" data-background-image="images/background.jpg" data-background-opacity="0.2" data-background-size="contain" class="quarto-title-block center">
-  <h1 class="title">An approach to NDVI analysis: 2-D Kumaraswamy autoregressive moving average</h1>
+  <h1 class="title">An approach to NDVI analysis: the 2-D Kumaraswamy autoregressive moving average model</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -344,11 +365,7 @@ Vítor Pereira <br> Orientador: Fábio Bayer
 <br>
 <p>
 </p><ul>
-<li>Ideia</li>
-</ul>
-<p>
-</p><ul>
-<li>O que é o NDVI?</li>
+<li>Motivação</li>
 </ul>
 <p>
 </p><ul>
@@ -357,6 +374,10 @@ Vítor Pereira <br> Orientador: Fábio Bayer
 <p>
 </p><ul>
 <li>Por que desenvolver a 2D-KARMA?</li>
+</ul>
+<p>
+</p><ul>
+<li>Características do 2D-KARMA</li>
 </ul>
 <p>
 </p><ul>
@@ -370,69 +391,39 @@ Vítor Pereira <br> Orientador: Fábio Bayer
 <section id="section" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title"></h2>
 <div style="margin-top: 200px; font-size: 3em; font-weight: bold;">
-<p>Ideia</p>
+<p>Motivação</p>
 </div>
 </section>
 <section id="section-1" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title"></h2>
 <div style="margin-top: 10px; font-size: 2em; font-weight: bold;">
-<p>Ideia</p>
+<p>Motivação</p>
 </div>
 <hr>
 <p><br></p>
 <p>
 </p><ul>
-<li><strong>Modelar o índice NDVI utilizando toda a estrutura de correlação do processamento de imagens</strong></li>
+<li>É o Índice de Vegetação com Diferença Normalizada (NDVI), com valores de -1 a 1;</li>
 </ul>
 <p>
 </p><ul>
-<li>Desenvolver uma nova abordagem para o 2D-ARMA</li>
+<li>O NDVI mede, de maneira geral, o verde na vegetação e sua a densidade de biomassa, utilizado para verificar a variabilidade das culturas.</li>
 </ul>
-<p>
-</p><ul>
-<li>Relacionar a estatística com o processamento de imagens</li>
-</ul>
-<p>
-</p><ul>
-<li>Realizar a detecção de bordas com o 2D-KARMA</li>
-</ul>
-</section>
+
+<img data-src="images/ndvi.png" class="r-stretch quarto-figure-center"></section>
 <section id="section-2" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title"></h2>
-<div style="margin-top: 200px; font-size: 3em; font-weight: bold;">
-<p>O que é o NDVI?</p>
-</div>
-</section>
-<section id="section-3" class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title"></h2>
 <div style="margin-top: 10px; font-size: 2em; font-weight: bold;">
-<p>O que é o NDVI?</p>
-</div>
-<hr>
-<p><br> <br></p>
-<p>
-</p><ul>
-<li>Índice de Vegetação com Diferença Normalizada (NDVI);</li>
-</ul>
-<p>
-</p><ul>
-<li>O NDVI mede, de maneira geral, o verde na vegetação e sua a densidade.</li>
-</ul>
-<p><img data-src="images/ndvi.png" class="absolute" style="top: 350px; right: 225px; "></p>
-</section>
-<section id="section-4" class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title"></h2>
-<div style="margin-top: 10px; font-size: 2em; font-weight: bold;">
-<p>O que é o NDVI?</p>
+<p>Motivação</p>
 </div>
 <hr>
 <p>
 </p><ul>
-<li>O NDVI é obtido por sensoriamento remoto;</li>
+<li>O NDVI é obtido por sensoriamento remoto e analisa a condição da planta: sanidade, nutrição e estado hídrico;</li>
 </ul>
 <p>
 </p><ul>
-<li>O NDVI analisa a condição da cultura desde a salinidade, nutrição, estado hídrico da cultura e do solo;</li>
+<li>O NDVI utiliza a radiação eletromagnética (luz) em diferentes espectros de ondas para avaliar as características da vegetação;</li>
 </ul>
 <p>
 </p><ul>
@@ -440,33 +431,64 @@ Vítor Pereira <br> Orientador: Fábio Bayer
 </ul>
 <p>
 </p><ul>
-<li>Uma imagem do NDVI considera a relação entre energia solar absorvida e refletida pela planta;</li>
+<li>Muito utilizado também para a detecção de queimadas;</li>
 </ul>
 <p>
 </p><ul>
-<li><span class="math inline">\(NDVI=\dfrac{NIR-RED}{NIR+RED}\)</span>, onde NIR é a Luz refletida na faixa infravermelha e RED é a Luz refletida na faixa vermelha</li>
+<li>Uma imagem do NDVI considera a relação entre energia solar absorvida e refletida pela planta (reflectância).</li>
 </ul>
 </section>
+<section id="section-3" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title"></h2>
+<div style="margin-top: 10px; font-size: 2em; font-weight: bold;">
+<p>Motivação</p>
+</div>
+<hr>
+<p>
+</p><ul>
+<li>O NDVI é associação entre o infravermelho próximo (NIR) e o RED (faixa vermelha do espectro visível);</li>
+</ul>
+<p>
+</p><ul>
+<li><span class="math inline">\(NDVI=\dfrac{NIR-RED}{NIR+RED}\)</span>, onde NIR e o RED são proporções da Luz Refletida pela vegetação;</li>
+</ul>
+<p>
+</p><ul>
+<li>No espectro visível (RED), queremos avaliar o comportamento da clorofila (verde), quanto menor a reflectância, maior ação do pigmento e melhor a saúde da vegetação;</li>
+</ul>
+<p>
+</p><ul>
+<li>No infravermelho próximo (NIR), queremos avaliar o comportamento da biomassa, quanto maior a reflexão, maior é a interação com a água nos tecidos;</li>
+</ul>
+</section>
+<section id="section-4" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title"></h2>
+<div style="margin-top: 10px; font-size: 2em; font-weight: bold;">
+<p>Motivação</p>
+</div>
+<hr>
+<p>
+</p><ul>
+<li>O NDVI auxilia a captar alterações que não seriam captadas a olho nu;</li>
+</ul>
+<p>
+</p><ul>
+<li>Assim o NDVI é uma redução da assinatura espectral da vegetação para apenas um valor numérico.</li>
+</ul>
+<p><img data-src="images/assinatura.jpeg" class="absolute" style="top: 350px; right: 225px; "></p>
+</section>
 <section id="section-5" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title"></h2>
+<div style="margin-top: 10px; font-size: 2em; font-weight: bold;">
+<p>Motivação</p>
+</div>
+
+<img data-src="images/ndvi_.jpeg" class="r-stretch quarto-figure-center"></section>
+<section id="section-6" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title"></h2>
 <div style="margin-top: 200px; font-size: 3em; font-weight: bold;">
 <p>2D-ARMA</p>
 </div>
-</section>
-<section id="section-6" class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title"></h2>
-<div style="margin-top: 10px; font-size: 2em; font-weight: bold;">
-<p>2D-ARMA</p>
-</div>
-<hr>
-<p><br></p>
-<p>
-</p><ul>
-<li><p>Modelar e estudar imagens a partir de uma perspectiva estatística;</p></li>
-<li><p>A maioria das imagens a serem estudas (imagens de regiões geográficas) são naturalmente ricos em textura e nível de cinza;</p></li>
-<li><p>Nesses casos os modelos 2D ARMA tem se mostrado eficiente e possui parcimônia na definição dos parâmetros;</p></li>
-<li><p>Modela as imagens com abordagem de séries temporais, assim substituindo vetores (1D) por matrizes (2D).</p></li>
-</ul>
 </section>
 <section id="section-7" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title"></h2>
@@ -477,14 +499,24 @@ Vítor Pereira <br> Orientador: Fábio Bayer
 <p><br></p>
 <p>
 </p><ul>
-<li>ARMA(1,1)</li>
+<li>Modelar e estudar imagens a partir de uma perspectiva estatística;</li>
 </ul>
-<p><img data-src="images/ARMA.jpeg" class="absolute" style="top: 200px; right: 225px; "></p>
-<p><br> <br></p>
-<ul>
-<li>2D-RARMA(1,1)</li>
+<p>
+</p><ul>
+<li>A maioria das imagens a serem estudas (imagens de regiões geográficas) são naturalmente ricos em textura e nível de cinza;</li>
 </ul>
-<p><img data-src="images/2DARMA.jpeg" class="absolute" style="top: 370px; right: 300px; "></p>
+<p>
+</p><ul>
+<li>Nesses casos os modelos 2D ARMA tem se mostrado eficiente e possui parcimônia na definição dos parâmetros;</li>
+</ul>
+<p>
+</p><ul>
+<li>Modela as imagens com abordagem de séries temporais, assim substituindo vetores (1D) por matrizes (2D);</li>
+</ul>
+<p>
+</p><ul>
+<li>Considera estrutura de autocorrelação da imagem, em que um pixel está condicionado ao comportamento do(s) anterior(es).</li>
+</ul>
 </section>
 <section id="section-8" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title"></h2>
@@ -500,7 +532,7 @@ Vítor Pereira <br> Orientador: Fábio Bayer
 <p><img data-src="images/ARMA.jpeg" class="absolute" style="top: 200px; right: 225px; "></p>
 <p><br> <br></p>
 <ul>
-<li>2D-RARMA(1,1)</li>
+<li>2D-ARMA(1,1)</li>
 </ul>
 <p><img data-src="images/2DARMA.jpeg" class="absolute" style="top: 370px; right: 300px; "></p>
 </section>
@@ -513,9 +545,9 @@ Vítor Pereira <br> Orientador: Fábio Bayer
 <p><br></p>
 <p>
 </p><ul>
-<li>Detecção de bordas</li>
+<li>Detecção de bordas, utilizado para detecção de diferentes tipos de solo.</li>
 </ul>
-<p><img data-src="images/bordas.jpeg" class="absolute" style="top: 200px; right: 225px; "></p>
+<p><img data-src="images/bordas.jpeg" class="absolute" style="top: 220px; right: 225px; "></p>
 </section>
 <section id="section-10" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title"></h2>
@@ -538,13 +570,12 @@ Vítor Pereira <br> Orientador: Fábio Bayer
 <li>Poucos modelos estatísticos foram propostos para modelagem de dados em 2D;
 <ul>
 <li>Gaussiana ou Simétrica (mais usuais);</li>
-<li>Rayleigh;</li>
-<li>Beta.</li>
+<li>Rayleigh.</li>
 </ul></li>
 </ul>
 <p>
 </p><ul>
-<li>Distribuição específica para modelagem de dados e proporções com histórico para dados hidrológicos;</li>
+<li>Distribuição específica para modelagem de dados e proporções com histórico para dados hidroambientais;</li>
 </ul>
 <p>
 </p><ul>
@@ -553,14 +584,20 @@ Vítor Pereira <br> Orientador: Fábio Bayer
 </section>
 <section id="section-12" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title"></h2>
+<div style="margin-top: 200px; font-size: 3em; font-weight: bold;">
+<p>Características do 2D-KARMA</p>
+</div>
+</section>
+<section id="section-13" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title"></h2>
 <div style="margin-top: 10px; font-size: 2em; font-weight: bold;">
-<p>Por que desenvolver a 2D-KARMA?</p>
+<p>Características do 2D-KARMA</p>
 </div>
 <p>
 </p><ul>
 <li>Função densidade de probabilidade:</li>
 </ul>
-<p><span class="math display">\[f(x;\alpha, \beta) = \dfrac{\alpha\beta}{b-a} (\dfrac{\tilde{x} - a}{b - a})^{\alpha - 1}(1 - (\dfrac{\tilde{x} - a}{b - a})^\alpha)^{\beta  - 1}, \quad a&lt;x&lt;b\]</span></p>
+<p><span class="math display">\[f(y;\alpha, \beta) = \dfrac{\alpha\beta}{b-a} \bigg(\dfrac{\tilde{y} - a}{b - a}\bigg)^{\alpha - 1}\bigg(1 - \bigg(\dfrac{\tilde{y} - a}{b - a}\bigg)^\alpha\bigg)^{\beta  - 1}, \quad a&lt;y&lt;b\]</span></p>
 <ul>
 <li>Onde <span class="math inline">\(\alpha, \beta &gt; 0\)</span> e <span class="math inline">\(b &gt; a\)</span></li>
 </ul>
@@ -569,29 +606,29 @@ Vítor Pereira <br> Orientador: Fábio Bayer
 <li>Estrutura do 2D-KARMA:</li>
 </ul>
 <p><span class="math display">\[\begin{align}
-\text{E}(\tilde{X}) = \dfrac{\beta\Gamma\bigg(1 + \dfrac{1}{\alpha}\bigg)\Gamma(\beta)}{\Gamma\bigg(1 + \dfrac{1}{\alpha} + \beta\bigg)}
+\text{E}(\tilde{Y}) = \dfrac{\beta\Gamma\bigg(1 + \dfrac{1}{\alpha}\bigg)\Gamma(\beta)}{\Gamma\bigg(1 + \dfrac{1}{\alpha} + \beta\bigg)}
 \qquad
-\text{md}(\tilde{X}) = a + (b+a)(1 - 0.5^{\dfrac{1}{\alpha}})^{\dfrac{1}{\beta}}
+\text{md}(\tilde{Y}) = a + (b+a)(1 - 0.5^{\dfrac{1}{\alpha}})^{\dfrac{1}{\beta}}
 \end{align}\]</span></p>
 </section>
-<section id="section-13" class="slide level2" data-auto-animate="true">
+<section id="section-14" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title"></h2>
 <div style="margin-top: 10px; font-size: 2em; font-weight: bold;">
-<p>Por que desenvolver a 2D-KARMA?</p>
+<p>Características do 2D-KARMA</p>
 </div>
 <p>
 </p><ul>
 <li>Função densidade de probabilidade 2D:</li>
 </ul>
-<p><span class="math display">\[f(x[n,k] | S[n,k]) = \dfrac{\alpha\beta}{b-a} (\dfrac{x[n,k] - a}{b - a})^{\alpha - 1}(1 - (\dfrac{x[n,k] - a}{b - a})^\alpha)^{\beta  - 1}, \quad a&lt;x&lt;b\]</span></p>
+<p><span class="math display">\[f(y[n,k] | S[n,k]) = \dfrac{\alpha\beta}{b-a} \bigg(\dfrac{y[n,k] - a}{b - a}\bigg)^{\alpha - 1}\bigg(1 - \bigg(\dfrac{y[n,k] - a}{b - a}\bigg)^\alpha\bigg)^{\beta  - 1}, \quad a&lt;y&lt;b\]</span></p>
 <ul>
-<li>Onde <span class="math inline">\(x[n,k]\)</span> é a variável aleatória que representam cada pixel de uma imagem condicionada a uma vizinhança <span class="math inline">\(S[n,k]\)</span>.</li>
+<li>Onde <span class="math inline">\(y[n,k]\)</span> é a variável aleatória que representam cada pixel de uma imagem condicionada a uma vizinhança <span class="math inline">\(S[n,k]\)</span>.</li>
 </ul>
 <p>
 </p><ul>
 <li>Modelo 2D KARMA:</li>
 </ul>
-<p><span class="math display">\[\eta_t = g(\mu[n,m]) = \alpha + y_t^T\beta  + \\ \sum _{i=0}^{p}\:\sum _{j=0}^{p}\:\phi_{(i,j)}[g(x[n-i,m-j]) - y[t - i, t - j]^T\beta] + \sum _{k=0}^{q}\:\sum _{l=0}^{q}\:\theta_{(k,l)}r[t - k, t - l] \]</span></p>
+<p><span class="math display">\[\eta_t = g(\mu[n,m]) = \alpha + x_t^T\beta  + \\ \sum _{i=0}^{p}\:\sum _{j=0}^{p}\:\phi_{(i,j)}[g(y[n-i,m-j]) - x[t - i, t - j]^T\beta] + \sum _{k=0}^{q}\:\sum _{l=0}^{q}\:\theta_{(k,l)}r[t - k, t - l] \]</span></p>
 <!-- $$\Phi(z1,z2)g(x[n,m]) = \beta + \Theta(z1,z2)e[n,m]$$
 
 
@@ -601,13 +638,13 @@ Vítor Pereira <br> Orientador: Fábio Bayer
 \Theta(z1,z2) = 1 + \sum _{k=0}^{q}\:\sum _{l=0}^{q}\:\theta_{(k,l)}z_1^kz_2^l 
 \end{align} -->
 </section>
-<section id="section-14" class="slide level2" data-auto-animate="true">
+<section id="section-15" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title"></h2>
 <div style="margin-top: 200px; font-size: 3em; font-weight: bold;">
 <p>Implementação</p>
 </div>
 </section>
-<section id="section-15" class="slide level2" data-auto-animate="true">
+<section id="section-16" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title"></h2>
 <div style="margin-top: 10px; font-size: 2em; font-weight: bold;">
 <p>Implementação</p>
@@ -620,20 +657,27 @@ Vítor Pereira <br> Orientador: Fábio Bayer
 </ul>
 <p>
 </p><ul>
-<li>Simulação de imagens com estrutura 2D-KARMA;</li>
+<li>Criação de imagens sintéticas com estrutura 2D-KARMA;</li>
 </ul>
 <p>
 </p><ul>
-<li>Iniciando o ajuste do modelagem e estimação dos parâmetros.</li>
+<li>Iniciando o ajuste da modelagem e estimação dos parâmetros.</li>
 </ul>
 </section>
-<section id="section-16" class="slide level2" data-auto-animate="true">
+<section id="section-17" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title"></h2>
+<div style="margin-top: 10px; font-size: 2em; font-weight: bold;">
+<p>Implementação</p>
+</div>
+
+<img data-src="images/sintetica.jpeg" class="r-stretch quarto-figure-center"></section>
+<section id="section-18" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title"></h2>
 <div style="margin-top: 200px; font-size: 3em; font-weight: bold;">
 <p>Próximos Passos</p>
 </div>
 </section>
-<section id="section-17" class="slide level2" data-auto-animate="true">
+<section id="section-19" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title"></h2>
 <div style="margin-top: 10px; font-size: 2em; font-weight: bold;">
 <p>Próximos Passos</p>
@@ -661,16 +705,34 @@ Vítor Pereira <br> Orientador: Fábio Bayer
 <li>Disponibilizar o pacote e o desenvolvimento do artigo.</li>
 </ul>
 </section>
-<section id="obrigado-pela-atenção" class="title-slide slide level1 center">
-<h1>Obrigado pela Atenção!!!</h1>
+<section>
+<section id="muito-obrigado" class="title-slide slide level1 center" data-background-image="images/sat.jpg" data-background-opacity="0.2">
+<h1>Muito obrigado :) !!!</h1>
 <div class="footer">
 <p>Dúvidas?</p>
 </div>
+</section>
+<section id="referências-bibliográficas" class="slide level2 smaller scrollable">
+<h2>Referências bibliográficas</h2>
 
 <img src="images/logo2.png" class="slide-logo r-stretch"><div class="footer footer-default">
 
 </div>
-</section>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-bayer2017kumaraswamy" class="csl-entry" role="doc-biblioentry">
+Bayer, Fábio Mariano, Débora Missio Bayer, and Guilherme Pumi. 2017. <span>“Kumaraswamy Autoregressive Moving Average Models for Double Bounded Environmental Data.”</span> <em>Journal of Hydrology</em> 555: 385–96.
+</div>
+<div id="ref-bustos2009spatial" class="csl-entry" role="doc-biblioentry">
+Bustos, Oscar, Silvia Ojeda, and Ronny Vallejos. 2009. <span>“Spatial ARMA Models and Its Applications to Image Filtering.”</span>
+</div>
+<div id="ref-palm20222" class="csl-entry" role="doc-biblioentry">
+Palm, Bruna G, Fábio M Bayer, and Renato J Cintra. 2022. <span>“2-d Rayleigh Autoregressive Moving Average Model for SAR Image Modeling.”</span> <em>Computational Statistics &amp; Data Analysis</em> 171: 107453.
+</div>
+<div id="ref-R" class="csl-entry" role="doc-biblioentry">
+R Core Team. 2021. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+</div>
+</div>
+</section></section>
     </div>
   </div>
 
@@ -681,6 +743,7 @@ Vítor Pereira <br> Orientador: Fábio Bayer
   <script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
   <script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
   <script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
   <script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
@@ -695,18 +758,19 @@ Vítor Pereira <br> Orientador: Fábio Bayer
       // Full list of configuration options available at:
       // https://revealjs.com/config/
       Reveal.initialize({
-'controlsAuto': true,
+'controlsAuto': false,
 'previewLinksAuto': false,
 'smaller': true,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
 'smaller': true,
  
         // Display controls in the bottom right corner
-        controls: false,
+        controls: true,
 
         // Help the user learn the controls by providing hints, for example by
         // bouncing the down arrow when they first encounter a vertical slide
@@ -828,7 +892,7 @@ Vítor Pereira <br> Orientador: Fábio Bayer
         previewLinks: false,
 
         // Transition style (none/fade/slide/convex/concave/zoom)
-        transition: 'none',
+        transition: 'fade',
 
         // Transition speed (default/fast/slow)
         transitionSpeed: 'default',
@@ -848,9 +912,9 @@ Vítor Pereira <br> Orientador: Fábio Bayer
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1050,
+        width: 1190,
 
-        height: 700,
+        height: 720,
 
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
@@ -873,7 +937,7 @@ Vítor Pereira <br> Orientador: Fábio Bayer
         },
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealMath,
           RevealNotes,

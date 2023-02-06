@@ -1,5 +1,5 @@
 ---
-title: "An approach to NDVI analysis: 2-D Kumaraswamy autoregressive moving average"
+title: "An approach to NDVI analysis: the 2-D Kumaraswamy autoregressive moving average model"
 subtitle: "  "
 author: "Vítor Pereira <br/> Orientador: Fábio Bayer"
 institute: "Estatística - UFSM"
@@ -13,6 +13,14 @@ format:
     theme: sky #dark
     logo: "images/logo2.png"
     smaller: True
+    chalkboard: true
+    transition: fade
+    controls: true
+    width: 1190
+    height: 720
+    bibliography: bib.bib
+    nocite: |
+            @*
 editor_options: 
   chunk_output_type: inline
 ---
@@ -24,11 +32,7 @@ editor_options:
 <br/>
 <p>
 
-- Ideia
-
-<p>
-
-- O que é o NDVI?
+- Motivação
 
 <p>
 
@@ -38,6 +42,9 @@ editor_options:
 
 - Por que desenvolver a 2D-KARMA?
 
+<p>
+
+- Características do 2D-KARMA
 
 <p>
 
@@ -52,14 +59,14 @@ editor_options:
 ## {auto-animate=true}
 
 ::: {style="margin-top: 200px; font-size: 3em; font-weight: bold;"}
-Ideia
+Motivação
 :::
 
 
 ## {auto-animate=true}
 
 ::: {style="margin-top: 10px; font-size: 2em; font-weight: bold;"}
-Ideia
+Motivação
 :::
 
 
@@ -68,53 +75,19 @@ Ideia
 
 <p>
 
-- **Modelar o índice NDVI utilizando toda a estrutura de correlação do processamento de imagens** 
+- É o Índice de Vegetação com Diferença Normalizada (NDVI), com valores de -1 a 1;
 
 <p>
 
-- Desenvolver uma nova abordagem para o 2D-ARMA
+- O NDVI mede, de maneira geral, o verde na vegetação e sua a densidade de biomassa, utilizado para verificar a variabilidade das culturas.
 
-<p>
-
-- Relacionar a estatística com o processamento de imagens
-
-<p>
-
-- Realizar a detecção de bordas com o 2D-KARMA
-
-## {auto-animate=true}
-
-::: {style="margin-top: 200px; font-size: 3em; font-weight: bold;"}
-O que é o NDVI?
-:::
+![](images/ndvi.png){fig-align="center"}
 
 
 ## {auto-animate=true}
 
 ::: {style="margin-top: 10px; font-size: 2em; font-weight: bold;"}
-O que é o NDVI?
-:::
-
-
-<hr/>
-<br/>
-<br/>
-
-<p>
-
-- Índice de Vegetação com Diferença Normalizada (NDVI);
-
-<p>
-
-- O NDVI mede, de maneira geral, o verde na vegetação e sua a densidade.
-
-![](images/ndvi.png){.absolute top=350 right=225}
-
-
-## {auto-animate=true}
-
-::: {style="margin-top: 10px; font-size: 2em; font-weight: bold;"}
-O que é o NDVI?
+Motivação
 :::
 
 
@@ -122,11 +95,10 @@ O que é o NDVI?
 
 <p>
 
-- O NDVI é obtido por sensoriamento remoto;
+- O NDVI é obtido por sensoriamento remoto e analisa a condição da planta: sanidade, nutrição e estado hídrico;
 
 <p>
-
-- O NDVI analisa a condição da cultura desde a salinidade, nutrição, estado hídrico da cultura e do solo;
+- O NDVI utiliza a radiação eletromagnética (luz) em diferentes espectros de ondas para avaliar as características da vegetação; 
 
 <p>
 
@@ -134,11 +106,71 @@ O que é o NDVI?
 
 <p>
 
-- Uma imagem do NDVI considera a relação entre energia solar absorvida e refletida pela planta;
+- Muito utilizado também para a detecção de queimadas; 
 
 <p>
 
-- $NDVI=\dfrac{NIR-RED}{NIR+RED}$, onde NIR é a Luz refletida na faixa infravermelha e RED é a Luz refletida na faixa vermelha
+- Uma imagem do NDVI considera a relação entre energia solar absorvida e refletida pela planta (reflectância).
+
+
+
+## {auto-animate=true}
+
+::: {style="margin-top: 10px; font-size: 2em; font-weight: bold;"}
+Motivação
+:::
+
+<hr/>
+
+
+<p>
+
+- O NDVI é associação entre o infravermelho próximo (NIR) e o RED (faixa vermelha do espectro visível);
+
+<p>
+
+- $NDVI=\dfrac{NIR-RED}{NIR+RED}$, onde NIR e o RED são proporções da Luz Refletida pela vegetação;
+
+<p>
+
+- No espectro visível (RED), queremos avaliar o comportamento da clorofila (verde), quanto menor a reflectância, maior ação do pigmento e melhor a saúde da vegetação;
+
+<p>
+
+- No infravermelho próximo (NIR), queremos avaliar o comportamento da biomassa, quanto maior a reflexão, maior é a interação com a água nos tecidos;
+
+
+
+## {auto-animate=true}
+
+::: {style="margin-top: 10px; font-size: 2em; font-weight: bold;"}
+Motivação
+:::
+
+<hr/>
+
+<p>
+
+- O NDVI auxilia a captar alterações que não seriam captadas a olho nu;
+
+<p>
+
+- Assim o NDVI é uma redução da assinatura espectral da vegetação para apenas um valor numérico.
+
+![](images/assinatura.jpeg){.absolute top=350 right=225}
+
+
+## {auto-animate=true}
+
+::: {style="margin-top: 10px; font-size: 2em; font-weight: bold;"}
+Motivação
+:::
+
+
+![](images/ndvi_.jpeg){fig-align="center"}
+
+
+
 
 ## {auto-animate=true}
 
@@ -160,11 +192,21 @@ O que é o NDVI?
 
 - Modelar e estudar imagens a partir de uma perspectiva estatística;
 
+<p>
+
 - A maioria das imagens a serem estudas (imagens de regiões geográficas) são naturalmente ricos em textura e nível de cinza;
+
+<p>
 
 - Nesses casos os modelos 2D ARMA tem se mostrado eficiente e possui parcimônia na definição dos parâmetros;
 
-- Modela as imagens com abordagem de séries temporais, assim substituindo vetores (1D) por matrizes (2D).
+<p>
+
+- Modela as imagens com abordagem de séries temporais, assim substituindo vetores (1D) por matrizes (2D);
+
+<p> 
+
+- Considera estrutura de autocorrelação da imagem, em que um pixel está condicionado ao comportamento do(s) anterior(es).
 
 ## {auto-animate=true}
 
@@ -184,32 +226,11 @@ O que é o NDVI?
 <br/>
 <br/>
 
-- 2D-RARMA(1,1)
+- 2D-ARMA(1,1)
 
 ![](images/2DARMA.jpeg){.absolute top=370 right=300}
 
 
-## {auto-animate=true}
-
-::: {style="margin-top: 10px; font-size: 2em; font-weight: bold;"}
-2D-ARMA
-:::
-
-<hr/>
-<br/>
-
-<p>
-
-- ARMA(1,1)
-
-![](images/ARMA.jpeg){.absolute top=200 right=225}
-
-<br/>
-<br/>
-
-- 2D-RARMA(1,1)
-
-![](images/2DARMA.jpeg){.absolute top=370 right=300}  
 
 ## {auto-animate=true}
 
@@ -222,9 +243,9 @@ O que é o NDVI?
 
 <p>
 
-- Detecção de bordas
+- Detecção de bordas, utilizado para detecção de diferentes tipos de solo.
 
-![](images/bordas.jpeg){.absolute top=200 right=225}
+![](images/bordas.jpeg){.absolute top=220 right=225}
 
 
 ## {auto-animate=true}
@@ -250,12 +271,11 @@ Por que desenvolver a 2D-KARMA?
 
 - Poucos modelos estatísticos foram propostos para modelagem de dados em 2D;
     - Gaussiana ou Simétrica (mais usuais);
-    - Rayleigh;
-    - Beta.
+    - Rayleigh.
 
 <p>
 
-- Distribuição específica para modelagem de dados e proporções com histórico para dados hidrológicos;
+- Distribuição específica para modelagem de dados e proporções com histórico para dados hidroambientais;
 
 <p>
 
@@ -263,15 +283,21 @@ Por que desenvolver a 2D-KARMA?
 
 ## {auto-animate=true}
 
+::: {style="margin-top: 200px; font-size: 3em; font-weight: bold;"}
+Características do 2D-KARMA
+:::
+
+## {auto-animate=true}
+
 ::: {style="margin-top: 10px; font-size: 2em; font-weight: bold;"}
-Por que desenvolver a 2D-KARMA?
+Características do 2D-KARMA
 :::
 
 <p> 
 
 - Função densidade de probabilidade:
 
-$$f(x;\alpha, \beta) = \dfrac{\alpha\beta}{b-a} (\dfrac{\tilde{x} - a}{b - a})^{\alpha - 1}(1 - (\dfrac{\tilde{x} - a}{b - a})^\alpha)^{\beta  - 1}, \quad a<x<b$$
+$$f(y;\alpha, \beta) = \dfrac{\alpha\beta}{b-a} \bigg(\dfrac{\tilde{y} - a}{b - a}\bigg)^{\alpha - 1}\bigg(1 - \bigg(\dfrac{\tilde{y} - a}{b - a}\bigg)^\alpha\bigg)^{\beta  - 1}, \quad a<y<b$$
 
 * Onde $\alpha, \beta > 0$ e $b > a$
 
@@ -280,31 +306,31 @@ $$f(x;\alpha, \beta) = \dfrac{\alpha\beta}{b-a} (\dfrac{\tilde{x} - a}{b - a})^{
 - Estrutura do 2D-KARMA:
 
 \begin{align}
-\text{E}(\tilde{X}) = \dfrac{\beta\Gamma\bigg(1 + \dfrac{1}{\alpha}\bigg)\Gamma(\beta)}{\Gamma\bigg(1 + \dfrac{1}{\alpha} + \beta\bigg)}
+\text{E}(\tilde{Y}) = \dfrac{\beta\Gamma\bigg(1 + \dfrac{1}{\alpha}\bigg)\Gamma(\beta)}{\Gamma\bigg(1 + \dfrac{1}{\alpha} + \beta\bigg)}
 \qquad
-\text{md}(\tilde{X}) = a + (b+a)(1 - 0.5^{\dfrac{1}{\alpha}})^{\dfrac{1}{\beta}}
+\text{md}(\tilde{Y}) = a + (b+a)(1 - 0.5^{\dfrac{1}{\alpha}})^{\dfrac{1}{\beta}}
 \end{align}
 
 
 ## {auto-animate=true}
 
 ::: {style="margin-top: 10px; font-size: 2em; font-weight: bold;"}
-Por que desenvolver a 2D-KARMA?
+Características do 2D-KARMA
 :::
 
 <p> 
 
 - Função densidade de probabilidade 2D:
 
-$$f(x[n,k] | S[n,k]) = \dfrac{\alpha\beta}{b-a} (\dfrac{x[n,k] - a}{b - a})^{\alpha - 1}(1 - (\dfrac{x[n,k] - a}{b - a})^\alpha)^{\beta  - 1}, \quad a<x<b$$
+$$f(y[n,k] | S[n,k]) = \dfrac{\alpha\beta}{b-a} \bigg(\dfrac{y[n,k] - a}{b - a}\bigg)^{\alpha - 1}\bigg(1 - \bigg(\dfrac{y[n,k] - a}{b - a}\bigg)^\alpha\bigg)^{\beta  - 1}, \quad a<y<b$$
 
-* Onde $x[n,k]$ é a variável aleatória que representam cada pixel de uma imagem condicionada a uma vizinhança $S[n,k]$.
+* Onde $y[n,k]$ é a variável aleatória que representam cada pixel de uma imagem condicionada a uma vizinhança $S[n,k]$.
 
 <p>
 
 - Modelo 2D KARMA:
 
-$$\eta_t = g(\mu[n,m]) = \alpha + y_t^T\beta  + \\ \sum _{i=0}^{p}\:\sum _{j=0}^{p}\:\phi_{(i,j)}[g(x[n-i,m-j]) - y[t - i, t - j]^T\beta] + \sum _{k=0}^{q}\:\sum _{l=0}^{q}\:\theta_{(k,l)}r[t - k, t - l] $$
+$$\eta_t = g(\mu[n,m]) = \alpha + x_t^T\beta  + \\ \sum _{i=0}^{p}\:\sum _{j=0}^{p}\:\phi_{(i,j)}[g(y[n-i,m-j]) - x[t - i, t - j]^T\beta] + \sum _{k=0}^{q}\:\sum _{l=0}^{q}\:\theta_{(k,l)}r[t - k, t - l] $$
 
 <!-- $$\Phi(z1,z2)g(x[n,m]) = \beta + \Theta(z1,z2)e[n,m]$$
 
@@ -339,11 +365,22 @@ Implementação
 
 <p>
 
-- Simulação de imagens com estrutura 2D-KARMA;
+- Criação de imagens sintéticas com estrutura 2D-KARMA;
 
 <p>
 
-- Iniciando o ajuste do modelagem e estimação dos parâmetros.
+- Iniciando o ajuste da modelagem e estimação dos parâmetros.
+
+
+## {auto-animate=true}
+
+::: {style="margin-top: 10px; font-size: 2em; font-weight: bold;"}
+Implementação
+:::
+
+
+![](images/sintetica.jpeg){fig-align="center"}
+
 
 
 ## {auto-animate=true}
@@ -386,8 +423,11 @@ Próximos Passos
 - Disponibilizar o pacote e o desenvolvimento do artigo.
 
 
-# Obrigado pela Atenção!!!
+# Muito obrigado :) !!! {background-image="images/sat.jpg" background-opacity=0.2}
 
 ::: footer
 Dúvidas?
 :::
+
+
+## Referências bibliográficas
