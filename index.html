@@ -407,7 +407,7 @@ Vítor Pereira <br> Orientador: Fábio Bayer
 </ul>
 <p>
 </p><ul>
-<li>O NDVI mede, de maneira geral, o verde na vegetação e sua a densidade de biomassa, utilizado para verificar a variabilidade das culturas.</li>
+<li>O NDVI mede, de maneira geral, o verde na vegetação e sua densidade de biomassa, utilizado para verificar a variabilidade das culturas.</li>
 </ul>
 
 <img data-src="images/ndvi.png" class="r-stretch quarto-figure-center"></section>
@@ -597,7 +597,7 @@ Vítor Pereira <br> Orientador: Fábio Bayer
 </p><ul>
 <li>Função densidade de probabilidade:</li>
 </ul>
-<p><span class="math display">\[f(y;\alpha, \beta) = \dfrac{\alpha\beta}{b-a} \bigg(\dfrac{\tilde{y} - a}{b - a}\bigg)^{\alpha - 1}\bigg(1 - \bigg(\dfrac{\tilde{y} - a}{b - a}\bigg)^\alpha\bigg)^{\beta  - 1}, \quad a&lt;y&lt;b\]</span></p>
+<p><span class="math display">\[f(y;\alpha, \beta) = \dfrac{\alpha\beta}{b-a} \bigg(\dfrac{\tilde{y} - a}{b - a}\bigg)^{\alpha - 1}\bigg(1 - \bigg(\dfrac{\tilde{y} - a}{b - a}\bigg)^\alpha\bigg)^{\beta  - 1}, \quad a&lt;\tilde{y}&lt;b\]</span></p>
 <ul>
 <li>Onde <span class="math inline">\(\alpha, \beta &gt; 0\)</span> e <span class="math inline">\(b &gt; a\)</span></li>
 </ul>
@@ -608,7 +608,7 @@ Vítor Pereira <br> Orientador: Fábio Bayer
 <p><span class="math display">\[\begin{align}
 \text{E}(\tilde{Y}) = \dfrac{\beta\Gamma\bigg(1 + \dfrac{1}{\alpha}\bigg)\Gamma(\beta)}{\Gamma\bigg(1 + \dfrac{1}{\alpha} + \beta\bigg)}
 \qquad
-\text{md}(\tilde{Y}) = a + (b+a)(1 - 0.5^{\dfrac{1}{\alpha}})^{\dfrac{1}{\beta}}
+\text{md}(\tilde{Y}) = a + (b+a)(1 - 0.5^{1/\alpha})^{1/\beta}
 \end{align}\]</span></p>
 </section>
 <section id="section-14" class="slide level2" data-auto-animate="true">
@@ -622,7 +622,7 @@ Vítor Pereira <br> Orientador: Fábio Bayer
 </ul>
 <p><span class="math display">\[f(y[n,k] | S[n,k]) = \dfrac{\alpha\beta}{b-a} \bigg(\dfrac{y[n,k] - a}{b - a}\bigg)^{\alpha - 1}\bigg(1 - \bigg(\dfrac{y[n,k] - a}{b - a}\bigg)^\alpha\bigg)^{\beta  - 1}, \quad a&lt;y&lt;b\]</span></p>
 <ul>
-<li>Onde <span class="math inline">\(y[n,k]\)</span> é a variável aleatória que representam cada pixel de uma imagem condicionada a uma vizinhança <span class="math inline">\(S[n,k]\)</span>.</li>
+<li>Onde <span class="math inline">\(y[n,k]\)</span> é a variável aleatória que representa cada pixel de uma imagem condicionada a uma vizinhança <span class="math inline">\(S[n,k]\)</span>.</li>
 </ul>
 <p>
 </p><ul>
@@ -892,7 +892,7 @@ R Core Team. 2021. <em>R: A Language and Environment for Statistical Computing</
         previewLinks: false,
 
         // Transition style (none/fade/slide/convex/concave/zoom)
-        transition: 'fade',
+        transition: 'none',
 
         // Transition speed (default/fast/slow)
         transitionSpeed: 'default',
@@ -912,9 +912,9 @@ R Core Team. 2021. <em>R: A Language and Environment for Statistical Computing</
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1190,
+        width: 1050,
 
-        height: 720,
+        height: 700,
 
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
